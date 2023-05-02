@@ -1,7 +1,8 @@
-import { Controller, Get, Param, Post, Body, Put, Delete } from '@nestjs/common';
+import { Controller, Get, Param, Post, Body, Put, Delete, HttpCode, HttpStatus, Res } from '@nestjs/common';
 import { UserService } from './user.service'
 import { PostService } from './post.service'
 import { User as UserModelPrisma, Post as PostModelPrisma } from '@prisma/client'
+import { STATUS_CODES } from 'http';
 
 @Controller()
 export class AppController {
@@ -37,20 +38,20 @@ export class AppController {
     })
   }
 
-  @Post('post')
-  async createDraft(
-    @Body() postData: { title: string, content?: string, authorEmail: string }
-  ): Promise<PostModelPrisma> {
-    const { title, content, authorEmail } = postData
-    return this.postService.createPost({
-      title: title,
-      content: content,
-      author: {
-        connect: { email: authorEmail }
-      }
-    })
+  // @Post('post')
+  // async createDraft(
+  //   @Body() postData: { title: string; content?: string; authorEmail: string },
+  // ): Promise<PostModelPrisma> {
+  //   const { title, content, authorEmail } = postData;
+  //   return this.postService.createPost({
+  //     title,
+  //     content,
+  //     author: {
+  //       connect: { email: authorEmail },
+  //     },
+  //   });
+  // }
 
-  }
 
   @Put('publish/:id')
   async publishPost(
@@ -86,10 +87,21 @@ export class AppController {
   async listUsers(): Promise<UserModelPrisma[]> {
     return this.userService.users({
       orderBy: {
-        id: 'asc'
+        createdAt: 'desc'
       }
     })
   }
+
+  
+  // @Delete('user/:id')
+  // async deleteAnUser(
+  //   @Param('id') id: string
+  // ): Promise<UserModelPrisma | any> {
+  //   // return this.userService.deleteUser({ id: Number(id) })
+  //   @Res.status(HttpStatus.ACCEPTED).json({
+  //     "message": "item deleted"
+  //   })
+  // }
 
 
 }
