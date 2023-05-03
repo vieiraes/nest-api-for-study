@@ -6,10 +6,12 @@ import { AppController } from './app.controller';
 import { UserService } from './user.service'
 import { PrismaService } from './prisma.service'
 import { PostService } from './post.service'
+import { CategoriesService } from './categories/categories.service';
+import { CategoriesController } from './categories/categories.controller';
 
 @Module({
   imports: [],
-  controllers: [AppController],
-  providers: [UserService, PrismaService, PostService],
+  controllers: [AppController, CategoriesController],
+  providers: [UserService, PrismaService, PostService, CategoriesService],
 })
 export class AppModule { }

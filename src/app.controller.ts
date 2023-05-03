@@ -2,7 +2,7 @@ import { Controller, Get, Param, Post, Body, Put, Delete, HttpCode, HttpStatus, 
 import { UserService } from './user.service'
 import { PostService } from './post.service'
 import { User as UserModelPrisma, Post as PostModelPrisma } from '@prisma/client'
-import { STATUS_CODES } from 'http';
+
 
 @Controller()
 export class AppController {
@@ -15,7 +15,7 @@ export class AppController {
   ROTAS DO POST
   */
 
-  @Get('post/:id')
+  @Get('draft/:id')
   async getPostById(@Param('id') id: string): Promise<PostModelPrisma> {
     return this.postService.post({ id: Number(id) })
   }
@@ -38,19 +38,32 @@ export class AppController {
     })
   }
 
-  // @Post('post')
-  // async createDraft(
-  //   @Body() postData: { title: string; content?: string; authorEmail: string },
-  // ): Promise<PostModelPrisma> {
-  //   const { title, content, authorEmail } = postData;
-  //   return this.postService.createPost({
-  //     title,
-  //     content,
-  //     author: {
-  //       connect: { email: authorEmail },
-  //     },
-  //   });
-  // }
+
+/* 
+export type Post = {
+  id: number
+  title: string
+  content: string | null
+  published: boolean | null
+  createdAt: Date
+  authorId: number | null
+}
+*/
+
+
+
+  @Post('draft')
+  async createDraft(
+    @Body() postData: { title: string; content?: string; authorId: number },
+  ): Promise<PostModelPrisma> {
+    const { title, content, authorId } = postData;
+    return this.postService.createPost({
+      title,
+      content,
+      authorId,
+      createdAt: new Date()
+    });
+  }
 
 
   @Put('publish/:id')
