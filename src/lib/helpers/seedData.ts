@@ -1,0 +1,9 @@
+export const WALLET1 = '00000000-0000-0000-0000-000000000000';
+export const WALLET2 = '11111111-0000-0000-0000-000000000000';
+export const USERID1 = '99999999-0000-0000-0000-000000000000';
+export const USERID2 = '88888888-0000-0000-0000-000000000000';
+export const AMOUNT = 123.90
+export const EMAIL1 = 'teste@email.com'
+export const EMAIL2 = 'teste2@email.com'
+export const ASSET1 = 'LMTC'
+export const ASSET2 = 'BITC'

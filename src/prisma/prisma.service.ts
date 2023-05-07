@@ -5,7 +5,7 @@ import { PrismaClient } from '@prisma/client';
 export class PrismaService extends PrismaClient implements OnModuleInit, OnModuleDestroy {
 
   constructor() {
-    super() // o que isso faz?
+    super() // necessario para chamar/herdar o constructor e os metodos da clase superior (classe Pai) que no caso é o PrismaClient
   }
   async onModuleInit() {
     await this.$connect();
